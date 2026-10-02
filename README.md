@@ -54,19 +54,15 @@ Columns indicate the number of sampling steps. For OpenWebText, compare generati
 
 | Method | Metric | 2 steps | 4 steps | 8 steps | 16 steps | 32 steps |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| ELF-MMD | Gen. PPL ↓ | 192.28 | 110.07 | 56.63 | 43.01 | 39.79 |
-| ELF-MMD | Entropy | 5.53 | 5.49 | 5.45 | 5.41 | 5.40 |
-| ELF-MMD + IRD | Gen. PPL ↓ | 141.03 | 78.11 | 47.33 | 38.83 | 35.75 |
-| ELF-MMD + IRD | Entropy | 5.47 | 5.44 | 5.39 | 5.35 | 5.33 |
+| ELF-MMD | Gen. PPL ↓ / Entropy | 192.28 / 5.53 | 110.07 / 5.49 | 56.63 / 5.45 | 43.01 / 5.41 | 39.79 / 5.40 |
+| ELF-MMD + IRD | Gen. PPL ↓ / Entropy | 141.03 / 5.47 | 78.11 / 5.44 | 47.33 / 5.39 | 38.83 / 5.35 | 35.75 / 5.33 |
 
 **OpenWebText — GPT-2 encoder**
 
 | Method | Metric | 2 steps | 4 steps | 8 steps | 16 steps | 32 steps |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| ELF-MMD | Gen. PPL ↓ | 127.77 | 85.61 | 56.52 | 44.34 | 40.01 |
-| ELF-MMD | Entropy | 5.39 | 5.45 | 5.45 | 5.44 | 5.43 |
-| ELF-MMD + IRD | Gen. PPL ↓ | 114.32 | 77.55 | 53.48 | 43.20 | 39.34 |
-| ELF-MMD + IRD | Entropy | 5.36 | 5.42 | 5.43 | 5.42 | 5.42 |
+| ELF-MMD | Gen. PPL ↓ / Entropy | 127.77 / 5.39 | 85.61 / 5.45 | 56.52 / 5.45 | 44.34 / 5.44 | 40.01 / 5.43 |
+| ELF-MMD + IRD | Gen. PPL ↓ / Entropy | 114.32 / 5.36 | 77.55 / 5.42 | 53.48 / 5.43 | 43.20 / 5.42 | 39.34 / 5.42 |
 
 **TinyGSM — accuracy (%) ↑**
 
