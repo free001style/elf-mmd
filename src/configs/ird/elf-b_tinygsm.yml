@@ -36,17 +36,17 @@ decoder_noise_scale: 1.0
 # Training
 global_batch_size: 128
 max_iters: 20000
-seed: 42
+seed: "42, 43, 44, 45, 46"
 
 # Evaluation
-sampling_configs_path: src/configs/sampling_configs/tinygsm.yml
+sampling_configs_path: src/configs/sampling_configs/elf-mmd_tinygsm.yml
 num_samples: 1319
 eval_freq: 1000
 
 # Logging & Checkpointing
 log_freq: 100
 save_freq: 1000
-output_dir: outputs/tinygsm_gpt2-ird
+output_dir: outputs/elf-b-mmd-ird_tinygsm
 
 # Wandb
 use_wandb: false

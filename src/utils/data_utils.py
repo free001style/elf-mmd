@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Dict, Optional
@@ -160,6 +161,21 @@ def load_dataset_split(path: str, *, split=None):
                              "Set data_split or eval_data_split explicitly.")
         return dataset[splits[0]]
 
+    def load_from_hub(cache_dir=None):
+        cache_kwargs = {"cache_dir": str(cache_dir)} if cache_dir is not None else {}
+        if split is None:
+            return hf_load_dataset(path, **cache_kwargs)
+        builder = load_dataset_builder(path, **cache_kwargs)
+        if builder.info.builder_name == "parquet":
+            files = builder.config.data_files
+            if split not in files:
+                raise ValueError(f"Unknown split {split!r} at {path!r}; available: {list(files)}.")
+            # A split= argument alone still prepares every configured split. Use
+            # only the selected files, retaining the dataset's declared features.
+            return hf_load_dataset("parquet", data_files={split: files[split]}, split=split,
+                                   features=builder.info.features, **cache_kwargs)
+        return hf_load_dataset(path, split=split, **cache_kwargs)
+
     ds = None
     if os.path.isdir(path):
         try:
@@ -171,20 +187,23 @@ def load_dataset_split(path: str, *, split=None):
             ds = concatenate_datasets([Dataset.from_file(str(shard)) for shard in shards])
     elif os.path.isfile(path) and path.endswith(".arrow"):
         ds = Dataset.from_file(path)
-    elif split is not None:
-        builder = load_dataset_builder(path)
-        if builder.info.builder_name == "parquet":
-            files = builder.config.data_files
-            if split not in files:
-                raise ValueError(f"Unknown split {split!r} at {path!r}; available: {list(files)}.")
-            # A split= argument alone still prepares every configured split. Use
-            # only the selected files, retaining the dataset's declared features.
-            ds = hf_load_dataset("parquet", data_files={split: files[split]}, split=split,
-                                 features=builder.info.features)
-        else:
-            ds = hf_load_dataset(path, split=split)
     else:
-        ds = hf_load_dataset(path)
+        try:
+            ds = load_from_hub()
+        except PermissionError as error:
+            from datasets import config as datasets_config
+
+            cache_root = Path(os.path.abspath(Path(datasets_config.HF_DATASETS_CACHE).expanduser()))
+            fallback = Path.home() / ".cache" / "huggingface" / "datasets"
+            if (error.filename is None or fallback == cache_root
+                    or not Path(os.path.abspath(error.filename)).is_relative_to(cache_root)):
+                raise
+            log_for_0(
+                f"Dataset cache is not writable at {error.filename}; retrying with {fallback}. "
+                "Set HF_DATASETS_CACHE to choose another writable directory.",
+                level=logging.WARNING,
+            )
+            ds = load_from_hub(cache_dir=fallback)
 
     ds = select_split(ds)
 

@@ -32,7 +32,7 @@ max_bootstrap_steps: 1
 feature_layer: 5
 mmd_batch_size: 32  # global_batch_size must be a multiple of 32 * number of GPUs.
 unbiased_rbf: true
-sigma: 2470  # RBF bandwidth.
+sigma: 1330  # RBF bandwidth.
 
 # Decoder objective
 decoder_prob: 0.2
@@ -44,14 +44,14 @@ max_iters: 8000
 seed: "42, 43, 44, 45, 46"  # The first seed trains; all five are used for sampling.
 
 # Evaluation
-sampling_configs_path: src/configs/sampling_configs/tinygsm.yml
+sampling_configs_path: src/configs/sampling_configs/elf-mmd_tinygsm.yml
 num_samples: 1319
 eval_freq: 1000
 
 # Logging & Checkpointing
 log_freq: 100
 save_freq: 1000
-output_dir: outputs/tinygsm_gpt2-elf_m-mmd
+output_dir: outputs/elf-b-mmd_tinygsm
 
 # Wandb
 use_wandb: false

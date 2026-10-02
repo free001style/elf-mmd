@@ -20,4 +20,5 @@ denoiser_p_std: 0.8
 sampling_configs_path: src/configs/sampling_configs/elf_owt.yml
 global_batch_size: 64
 num_samples: 1000
-output_dir: outputs/eval-elf-owt-t5
+seed: "42, 43, 44, 45, 46"
+output_dir: outputs/eval-elf-t5-owt

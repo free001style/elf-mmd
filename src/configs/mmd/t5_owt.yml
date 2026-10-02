@@ -35,18 +35,18 @@ decoder_noise_scale: 5.0
 
 # Training
 global_batch_size: 64
-max_iters: 20000
+max_iters: 10000
 seed: "42, 43, 44, 45, 46"  # The first seed trains; all five are used for sampling.
 
 # Evaluation
-sampling_configs_path: src/configs/sampling_configs/owt.yml
+sampling_configs_path: src/configs/sampling_configs/elf-mmd_owt.yml
 num_samples: 1000
 eval_freq: 1000
 
 # Logging & Checkpointing
 log_freq: 100
 save_freq: 1000
-output_dir: outputs/owt_t5-mmd
+output_dir: outputs/elf-b-mmd_t5_owt
 
 # Wandb
 use_wandb: false
